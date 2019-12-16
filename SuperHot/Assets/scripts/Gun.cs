@@ -18,7 +18,10 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Instantiate(bullet, spawnPoint.transform.position, Quaternion.identity);
+            Instantiate(bullet, spawnPoint.transform.position, this.transform.rotation);
+           // GameObject bulletPrefab = Instantiate(bullet);
+            //bulletPrefab.transform.position = spawnPoint.transform.position + spawnPoint.transform.forward;
+           // bulletPrefab.transform.forward = spawnPoint.transform.forward;
         }
     }
 }
