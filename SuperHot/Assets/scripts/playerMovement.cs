@@ -9,12 +9,18 @@ public class playerMovement : MonoBehaviour
     float targetScale;
     float lerpSpeed = 2;
 
-    public float speed;
-    public float runSpeed;
-    public float jumpForce;
-    public float raycastDistance;
-    private float firstSpeed;
-    private Rigidbody rb;
+    [SerializeField] private float speed;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float raycastDistance;
+    [SerializeField] private float firstSpeed;
+    [SerializeField] private Rigidbody rb;
+
+    [SerializeField] private GameObject object1;
+    [SerializeField] private GameObject object2;
+    [SerializeField] private GameObject object3;
+    [SerializeField] private GameObject RayStart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +43,7 @@ public class playerMovement : MonoBehaviour
 
         if (Input.anyKey)
         {
-            targetScale = 0.2f;
+            targetScale = 0.4f;
             lerpSpeed = 3;
         }
         else
@@ -47,6 +53,7 @@ public class playerMovement : MonoBehaviour
         }
         tm.myTimeScale = Mathf.Lerp(tm.myTimeScale, targetScale, Time.deltaTime * lerpSpeed);
 
+        ItemPickup();
     }
 
     private void FixedUpdate()
@@ -73,5 +80,39 @@ public class playerMovement : MonoBehaviour
         Vector3 newPosition = rb.position + rb.transform.TransformDirection(movement);
 
         rb.MovePosition(newPosition);
+    }
+
+    public void ItemPickup()
+    {
+        Vector3 fwd = RayStart.transform.TransformDirection (Vector3.forward);
+        RaycastHit hit;
+        Ray ray;
+        if(Physics.Raycast(transform.position,fwd, out hit))
+        {
+            Debug.DrawRay(RayStart.transform.position, Vector3.forward, Color.blue,1000);
+            Debug.Log(hit.collider.name);
+            if(hit.collider.tag == "Item" && Input.GetKeyDown(KeyCode.F))
+            {
+               var type = hit.collider.gameObject.GetComponent<ObjectPickup>().getObjectTipe();
+                if (type == 1)
+                {
+                    object1.SetActive(true);
+                    object2.SetActive(false);
+                    object3.SetActive(false);
+                }
+                if (type == 2)
+                {
+                    object1.SetActive(false);
+                    object2.SetActive(true);
+                    object3.SetActive(false);
+                }
+                if (type == 3)
+                {
+                    object1.SetActive(false);
+                    object2.SetActive(false);
+                    object3.SetActive(true);
+                }
+            }
+        }
     }
 }

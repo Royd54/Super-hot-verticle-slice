@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fire
   - bulletSpawnPoint
+  - Item
   layers:
   - Default
   - TransparentFX
