@@ -9,7 +9,12 @@ public class ObjectPickupAnimation : MonoBehaviour
 
     void Update()
     { 
-            currentView = GameObject.Find("WeaponHolder").GetComponent<Transform>();
+            currentView = GameObject.Find("WeaponHand").GetComponent<Transform>();
+
+        if (gameObject.transform.position == currentView.position)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
@@ -30,7 +35,7 @@ public class ObjectPickupAnimation : MonoBehaviour
     //these fucntions set the current view to lerp to
     public void focusPlayer()
     {
-        currentView = GameObject.Find("WeaponHolder").GetComponent<Transform>();
+        currentView = GameObject.Find("WeaponHand").GetComponent<Transform>();
     }
 
 }
