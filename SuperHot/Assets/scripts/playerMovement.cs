@@ -19,7 +19,13 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private GameObject object1;
     [SerializeField] private GameObject object2;
     [SerializeField] private GameObject object3;
-    [SerializeField] private GameObject RayStart;
+
+    [SerializeField] private GameObject rayStart;
+    [SerializeField] private GameObject pickupText;
+    [SerializeField] private Camera cam;
+    private float pickupRange = 5f;
+    private int pickuplayerMask;
+    [SerializeField] private int type;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +33,7 @@ public class playerMovement : MonoBehaviour
         tm = TimeManager.GetInstance();
         rb = GetComponent<Rigidbody>();
         firstSpeed = speed;
+        pickuplayerMask = LayerMask.GetMask("Item");
     }
 
     // Update is called once per frame
@@ -52,8 +59,18 @@ public class playerMovement : MonoBehaviour
             lerpSpeed = 4;
         }
         tm.myTimeScale = Mathf.Lerp(tm.myTimeScale, targetScale, Time.deltaTime * lerpSpeed);
+        if (object1.activeInHierarchy == false && object2.activeInHierarchy == false && object3.activeInHierarchy == false)
+        {
+            ItemPickup();
+        }
+        else
+        {
+            pickupText.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
 
-        ItemPickup();
+        }
     }
 
     private void FixedUpdate()
@@ -84,35 +101,72 @@ public class playerMovement : MonoBehaviour
 
     public void ItemPickup()
     {
-        Vector3 fwd = RayStart.transform.TransformDirection (Vector3.forward);
         RaycastHit hit;
-        Ray ray;
-        if(Physics.Raycast(transform.position,fwd, out hit))
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        if(Physics.Raycast(ray, out hit, pickupRange, pickuplayerMask))
         {
-            Debug.DrawRay(RayStart.transform.position, Vector3.forward, Color.blue,1000);
-            Debug.Log(hit.collider.name);
-            if(hit.collider.tag == "Item" && Input.GetKeyDown(KeyCode.F))
+            Debug.Log(hit.collider.tag);
+            if(hit.collider.tag == "Item")
             {
-               var type = hit.collider.gameObject.GetComponent<ObjectPickup>().getObjectTipe();
-                if (type == 1)
+                pickupText.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.F))
                 {
-                    object1.SetActive(true);
-                    object2.SetActive(false);
-                    object3.SetActive(false);
+                    //pickupText.SetActive(false);
+                    type = hit.collider.gameObject.GetComponent<ObjectPickup>().getObjectTipe();
+                    if (type == 1)
+                    {
+                        hit.collider.gameObject.GetComponent<ObjectPickupAnimation>().focusPlayer();
+                        StartCoroutine(gunPickupCooldown(1));
+                        Destroy(hit.collider.gameObject, 0.5f);
+                    }
+                    if (type == 2)
+                    {
+                        hit.collider.gameObject.GetComponent<ObjectPickupAnimation>().focusPlayer();
+                        StartCoroutine(gunPickupCooldown(2));
+                        Destroy(hit.collider.gameObject, 0.5f);
+                    }
+                    if (type == 3)
+                    {
+                        hit.collider.gameObject.GetComponent<ObjectPickupAnimation>().focusPlayer();
+                        StartCoroutine(gunPickupCooldown(3));
+                        Destroy(hit.collider.gameObject, 0.5f);
+                    }
                 }
-                if (type == 2)
-                {
-                    object1.SetActive(false);
-                    object2.SetActive(true);
-                    object3.SetActive(false);
-                }
-                if (type == 3)
-                {
-                    object1.SetActive(false);
-                    object2.SetActive(false);
-                    object3.SetActive(true);
-                }
+            }
+            else
+            {
+                pickupText.SetActive(false);
             }
         }
     }
+
+    public void ThrowItem()
+    {
+
+    }
+
+    IEnumerator gunPickupCooldown(int type2)
+    {
+        pickupText.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        if (type2 == 1)
+        {
+            object1.SetActive(true);
+            object2.SetActive(false);
+            object3.SetActive(false);
+        }
+        if (type2 == 2)
+        {
+            object1.SetActive(false);
+            object2.SetActive(true);
+            object3.SetActive(false);
+        }
+        if (type2 == 3)
+        {
+            object1.SetActive(false);
+            object2.SetActive(false);
+            object3.SetActive(true);
+        }
+    }
+
 }

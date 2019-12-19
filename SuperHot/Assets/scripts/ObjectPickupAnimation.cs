@@ -7,14 +7,9 @@ public class ObjectPickupAnimation : MonoBehaviour
     public float transitionSpeed;
     public Transform currentView;
 
-    void Update()
-    { 
-            currentView = GameObject.Find("WeaponHand").GetComponent<Transform>();
-
-        if (gameObject.transform.position == currentView.position)
-        {
-            Destroy(gameObject);
-        }
+    void Start()
+    {
+        currentView = gameObject.transform;
     }
 
 
