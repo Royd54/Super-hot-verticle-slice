@@ -22,6 +22,10 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField] private GameObject rayStart;
     [SerializeField] private GameObject pickupText;
+
+    [SerializeField] private GameObject throwPistol;
+    [SerializeField] private GameObject throwCube;
+
     [SerializeField] private Camera cam;
     private float pickupRange = 5f;
     private int pickuplayerMask;
@@ -69,7 +73,7 @@ public class playerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-
+            ThrowItem();
         }
     }
 
@@ -142,7 +146,18 @@ public class playerMovement : MonoBehaviour
 
     public void ThrowItem()
     {
-
+        if (object1.activeInHierarchy == true)
+        {
+            Instantiate(throwPistol, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, this.transform.rotation);
+            object1.SetActive(false);
+            pickupText.SetActive(false);
+        }
+        if (object2.activeInHierarchy == true)
+        {
+            Instantiate(throwCube, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, this.transform.rotation);
+            object2.SetActive(false);
+            pickupText.SetActive(false);
+        }
     }
 
     IEnumerator gunPickupCooldown(int type2)

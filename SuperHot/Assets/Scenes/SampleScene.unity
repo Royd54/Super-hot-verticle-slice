@@ -862,6 +862,10 @@ MonoBehaviour:
   object3: {fileID: 1116334947}
   rayStart: {fileID: 405882266}
   pickupText: {fileID: 117791453}
+  throwPistol: {fileID: 6880847475626601304, guid: 29e1caad2ca479744b77b917ca6eca33,
+    type: 3}
+  throwCube: {fileID: 5077747709626421379, guid: 43c16b4ccc81cb446aacf3e29f42d0f3,
+    type: 3}
   cam: {fileID: 963194227}
   type: 0
 --- !u!54 &816776143
