@@ -33,6 +33,7 @@ public class BulletBehaviour : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         print("hit " + other.name + "!");
+        other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
         Destroy(gameObject);
     }
 }
