@@ -12,24 +12,31 @@ public class VRGun : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject spawnPoint;
 
+    private float timeBetweenShots = 0.5f;
+    private float shootCooldown;
+
     // Start is called before the first frame update
     void Start()
     {
         interactable = GetComponent<Interactable>();
+        shootCooldown = timeBetweenShots;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(interactable.attachedToHand != null)
+        if (shootCooldown > 0)
+        {
+            shootCooldown -= Time.deltaTime;
+        }
+
+        if (interactable.attachedToHand != null)
         {
             SteamVR_Input_Sources source = interactable.attachedToHand.handType;
             if (fireAction[source].stateDown)
             {
                 Instantiate(bullet, spawnPoint.transform.position, this.transform.rotation);
-                // GameObject bulletPrefab = Instantiate(bullet);
-                //bulletPrefab.transform.position = spawnPoint.transform.position + spawnPoint.transform.forward;
-                // bulletPrefab.transform.forward = spawnPoint.transform.forward;
+                shootCooldown = timeBetweenShots;
             }
         }
     }

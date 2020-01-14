@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-    TimeManager tm;
+    private TimeManager tm;
 
     float targetScale;
     float lerpSpeed = 2;
 
     [SerializeField] private float speed;
-    [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float raycastDistance;
     [SerializeField] private float firstSpeed;
     [SerializeField] private Rigidbody rb;
 
+    private bool pickingUp = true;
     [SerializeField] private GameObject object1;
     [SerializeField] private GameObject object2;
     [SerializeField] private GameObject object3;
@@ -25,6 +25,7 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField] private GameObject throwPistol;
     [SerializeField] private GameObject throwCube;
+    [SerializeField] private GameObject gun;
 
     [SerializeField] private Camera cam;
     private float pickupRange = 5f;
@@ -38,6 +39,7 @@ public class playerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         firstSpeed = speed;
         pickuplayerMask = LayerMask.GetMask("Item");
+        gun = GameObject.Find("WeaponHolder");
     }
 
     // Update is called once per frame
@@ -65,13 +67,20 @@ public class playerMovement : MonoBehaviour
         tm.myTimeScale = Mathf.Lerp(tm.myTimeScale, targetScale, Time.deltaTime * lerpSpeed);
         if (object1.activeInHierarchy == false && object2.activeInHierarchy == false && object3.activeInHierarchy == false)
         {
+            pickingUp = true;
             ItemPickup();
         }
         else
         {
             pickupText.SetActive(false);
         }
-        if (Input.GetKeyDown(KeyCode.G))
+
+        if (Input.GetKey(KeyCode.Mouse1) && pickingUp == false && object1.activeInHierarchy == true )
+        {
+            ThrowItem();
+        }
+
+        if (Input.GetKey(KeyCode.Mouse1) && pickingUp == false && object2.activeInHierarchy == true)
         {
             ThrowItem();
         }
@@ -84,14 +93,6 @@ public class playerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            speed = runSpeed;
-        }
-        else
-        {
-            speed = firstSpeed;
-        }
 
         float hAxis = Input.GetAxisRaw("Horizontal");
         float vAxis = Input.GetAxisRaw("Vertical");
@@ -113,7 +114,7 @@ public class playerMovement : MonoBehaviour
             if(hit.collider.tag == "Item")
             {
                 pickupText.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     //pickupText.SetActive(false);
                     type = hit.collider.gameObject.GetComponent<ObjectPickup>().getObjectTipe();
@@ -148,13 +149,13 @@ public class playerMovement : MonoBehaviour
     {
         if (object1.activeInHierarchy == true)
         {
-            Instantiate(throwPistol, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, this.transform.rotation);
+            Instantiate(throwPistol, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, gun.transform.rotation);
             object1.SetActive(false);
             pickupText.SetActive(false);
         }
         if (object2.activeInHierarchy == true)
         {
-            Instantiate(throwCube, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, this.transform.rotation);
+            Instantiate(throwCube, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, gun.transform.rotation);
             object2.SetActive(false);
             pickupText.SetActive(false);
         }
@@ -166,22 +167,36 @@ public class playerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (type2 == 1)
         {
+            pickingUp = false;
             object1.SetActive(true);
             object2.SetActive(false);
             object3.SetActive(false);
         }
         if (type2 == 2)
         {
+            pickingUp = false;
             object1.SetActive(false);
             object2.SetActive(true);
             object3.SetActive(false);
         }
         if (type2 == 3)
         {
+            pickingUp = false;
             object1.SetActive(false);
             object2.SetActive(false);
             object3.SetActive(true);
         }
+    }
+
+    public TimeManager getTimeManger()
+    {
+        return tm;
+    }
+
+    public void setTime()
+    {
+        targetScale = 0.2f;
+        lerpSpeed = 3;
     }
 
 }

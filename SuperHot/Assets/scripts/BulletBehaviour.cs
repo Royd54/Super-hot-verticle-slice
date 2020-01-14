@@ -36,4 +36,11 @@ public class BulletBehaviour : MonoBehaviour {
         other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        print("hit " + other.gameObject.name + "!");
+        other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
+        Destroy(gameObject);
+    }
 }

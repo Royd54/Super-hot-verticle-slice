@@ -6,22 +6,36 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject player;
+
+    private float timeBetweenShots = 0.5f;
+    private float shootCooldown;
+
+    [SerializeField] private GameObject crosshair;
+    [SerializeField] private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        shootCooldown = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        anim.speed = TimeManager.GetInstance().myTimeScale * 2;
+        if (shootCooldown > 0)
+        {
+            anim.SetBool("Shot", false);
+            shootCooldown -= Time.deltaTime * TimeManager.GetInstance().myTimeScale;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && shootCooldown < Time.deltaTime)
         {
             Instantiate(bullet, spawnPoint.transform.position, this.transform.rotation);
-           // GameObject bulletPrefab = Instantiate(bullet);
-            //bulletPrefab.transform.position = spawnPoint.transform.position + spawnPoint.transform.forward;
-           // bulletPrefab.transform.forward = spawnPoint.transform.forward;
+            anim.SetBool("Shot", true);
+            shootCooldown = timeBetweenShots;
         }
     }
+
 }

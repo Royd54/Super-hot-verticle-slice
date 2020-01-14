@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5077747709626421381}
   - component: {fileID: 5077747709626421380}
   - component: {fileID: -5185596322522586492}
-  - component: {fileID: 214724535634471259}
+  - component: {fileID: -5250842517676730252}
   m_Layer: 8
   m_Name: throwCube
   m_TagString: Item
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e7d442e0adef740bf689426f580e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 0
---- !u!54 &214724535634471259
+  force: 200
+--- !u!54 &-5250842517676730252
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
