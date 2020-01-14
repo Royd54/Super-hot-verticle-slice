@@ -36,6 +36,12 @@ public class Gun : MonoBehaviour
             anim.SetBool("Shot", true);
             shootCooldown = timeBetweenShots;
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && shootCooldown < Time.deltaTime)
+        {
+
+        }
+
     }
 
 }

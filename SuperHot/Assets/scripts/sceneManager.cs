@@ -26,10 +26,7 @@ public class sceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(beginPos != beginObject.transform)
-        {
-            resetCullingMask();
-        }
+
     }
 
     public void loadNewLevelEffect()

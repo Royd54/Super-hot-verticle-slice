@@ -8,7 +8,7 @@ public class playerMovement : MonoBehaviour
 
     float targetScale;
     float lerpSpeed = 2;
-
+    [SerializeField] private GameObject timeManager;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float raycastDistance;
@@ -38,7 +38,7 @@ public class playerMovement : MonoBehaviour
         tm = TimeManager.GetInstance();
         rb = GetComponent<Rigidbody>();
         firstSpeed = speed;
-        pickuplayerMask = LayerMask.GetMask("Item");
+        pickuplayerMask = LayerMask.GetMask("Item", "firstItem");
         gun = GameObject.Find("WeaponHolder");
     }
 
@@ -67,12 +67,9 @@ public class playerMovement : MonoBehaviour
         tm.myTimeScale = Mathf.Lerp(tm.myTimeScale, targetScale, Time.deltaTime * lerpSpeed);
         if (object1.activeInHierarchy == false && object2.activeInHierarchy == false && object3.activeInHierarchy == false)
         {
+            pickupText.SetActive(false);
             pickingUp = true;
             ItemPickup();
-        }
-        else
-        {
-            pickupText.SetActive(false);
         }
 
         if (Input.GetKey(KeyCode.Mouse1) && pickingUp == false && object1.activeInHierarchy == true )
@@ -159,6 +156,12 @@ public class playerMovement : MonoBehaviour
             object2.SetActive(false);
             pickupText.SetActive(false);
         }
+        if (object3.activeInHierarchy == true)
+        {
+            Instantiate(throwCube, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, gun.transform.rotation);
+            object3.SetActive(false);
+            pickupText.SetActive(false);
+        }
     }
 
     IEnumerator gunPickupCooldown(int type2)
@@ -183,8 +186,9 @@ public class playerMovement : MonoBehaviour
         {
             pickingUp = false;
             object1.SetActive(false);
-            object2.SetActive(false);
-            object3.SetActive(true);
+            object2.SetActive(true);
+            object3.SetActive(false);
+            timeManager.GetComponent<sceneManager>().resetCullingMask();
         }
     }
 
