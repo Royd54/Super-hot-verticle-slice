@@ -9,6 +9,7 @@ TagManager:
   - Item
   - pickedUp
   - NextLevel
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - 
   - Item
   - firstItem
-  - 
-  - 
+  - Map
+  - Enemy
   - 
   - 
   - 

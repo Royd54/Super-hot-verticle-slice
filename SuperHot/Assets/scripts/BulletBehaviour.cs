@@ -8,6 +8,7 @@ public class BulletBehaviour : MonoBehaviour {
     float actualForce;
     Rigidbody rigid;
     private float speed = 1000f;
+    [SerializeField] private GameObject enemyHitParticle;
 
     void Start()
     {
@@ -19,12 +20,21 @@ public class BulletBehaviour : MonoBehaviour {
         transform.position += transform.forward * TimeManager.GetInstance().myTimeScale;
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
-        print("hit " + other.name + "!");
-        other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
-        Destroy(gameObject);
+        if (other.gameObject.tag == "Enemy")
+        {
+            print("hit " + other.name + "!");
+            Instantiate(enemyHitParticle, this.transform.position, Quaternion.identity);
+            other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
+            Destroy(gameObject);
+        }
+        else
+        {
+            print("hit " + other.name + "!");
+            other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision other)
