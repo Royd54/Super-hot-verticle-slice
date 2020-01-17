@@ -34,7 +34,7 @@ public class Gun : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && shootCooldown < Time.deltaTime)
         {
-            Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            bullet = Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
             anim.SetBool("Shot", true);
             shootCooldown = timeBetweenShots;
         }

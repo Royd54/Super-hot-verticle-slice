@@ -8,7 +8,6 @@ TagManager:
   - bulletSpawnPoint
   - Item
   - pickedUp
-  - NextLevel
   layers:
   - Default
   - TransparentFX

@@ -108,13 +108,6 @@ public class playerMovement : MonoBehaviour
         if(Physics.Raycast(ray, out hit, pickupRange, pickuplayerMask))
         {
             Debug.Log(hit.collider.tag);
-            if (hit.collider.tag == "NextLevel")
-            {
-                if (Input.GetKeyDown(KeyCode.Mouse1))
-                {
-                    hit.collider.gameObject.GetComponent<nextLevelObj>().setInteracted();
-                }
-            }
             if(hit.collider.tag == "Item")
             {
                 pickupText.SetActive(true);
