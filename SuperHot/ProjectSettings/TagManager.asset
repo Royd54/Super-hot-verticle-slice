@@ -10,6 +10,7 @@ TagManager:
   - pickedUp
   - NextLevel
   - Enemy
+  - projectile
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - firstItem
   - Map
   - Enemy
-  - 
+  - Player
   - 
   - 
   - 

@@ -8,9 +8,11 @@ public class VRGun : MonoBehaviour
 {
     public SteamVR_Action_Boolean fireAction;
     private Interactable interactable;
+    Rigidbody rigid;
 
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private bool dropped;
 
     private float timeBetweenShots = 0.5f;
     private float shootCooldown;
@@ -18,6 +20,7 @@ public class VRGun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rigid = GetComponent<Rigidbody>();
         interactable = GetComponent<Interactable>();
         shootCooldown = timeBetweenShots;
     }
@@ -39,5 +42,6 @@ public class VRGun : MonoBehaviour
                 shootCooldown = timeBetweenShots;
             }
         }
+
     }
 }

@@ -19,10 +19,8 @@ public class bouncingBalls : MonoBehaviour
     {
         //rigid.AddForce(Physics.gravity * TimeManager.GetInstance().myTimeScale);
 
-        Vector3 velocity = rigid.velocity * TimeManager.GetInstance().myTimeScale;
+        Vector3 velocity = Physics.gravity * TimeManager.GetInstance().myTimeScale;
 
         rigid.velocity = velocity;
-
-        transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("wayponint").transform.position, TimeManager.GetInstance().myTimeScale);
     }
 }

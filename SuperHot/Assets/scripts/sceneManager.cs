@@ -31,7 +31,7 @@ public class sceneManager : MonoBehaviour
 
     public void loadNewLevelEffect()
     {
-            camera.cullingMask = 9 << 9;
+        camera.cullingMask = 9 << 9;
     }
 
     public void resetCullingMask()
@@ -40,6 +40,15 @@ public class sceneManager : MonoBehaviour
     }
     public void nextLevel()
     {
-        SceneManager.LoadScene(sceneBuildIndex: 1);
+        Scene sceneLoaded = SceneManager.GetActiveScene();
+        if (sceneLoaded.buildIndex == 1)
+        {
+            SceneManager.LoadScene(sceneBuildIndex: 0);
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneBuildIndex: 1);
+        }
+        
     }
 }

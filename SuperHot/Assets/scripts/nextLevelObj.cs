@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR;
+using Valve.VR.InteractionSystem;
 
 public class nextLevelObj : MonoBehaviour
 {
+    private Interactable interactable;
     public Vector3 vertLeftTopFront = new Vector3(-1, 1, 1);
     public Vector3 vertRightTopFront = new Vector3(1, 1, 1);
     public Vector3 vertRightTopBack = new Vector3(1, 1, -1);
@@ -18,6 +21,7 @@ public class nextLevelObj : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        interactable = GetComponent<Interactable>();
         sceneManager = GameObject.Find("TimeManager");
         MeshFilter mf = GetComponent<MeshFilter>();
         Mesh mesh = mf.mesh;
@@ -141,11 +145,13 @@ public class nextLevelObj : MonoBehaviour
         {
             sceneManager.GetComponent<sceneManager>().nextLevel();
         }
+
     }
 
-    public void setInteracted()
+
+
+public void setInteracted()
     {
         interacted = true;
     }
-
 }
