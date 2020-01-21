@@ -25,6 +25,7 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField] private GameObject throwPistol;
     [SerializeField] private GameObject throwCube;
+    [SerializeField] private GameObject throwCigDish;
     [SerializeField] private GameObject gun;
 
     [SerializeField] private Camera cam;
@@ -78,6 +79,11 @@ public class playerMovement : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Mouse1) && pickingUp == false && object2.activeInHierarchy == true)
+        {
+            ThrowItem();
+        }
+
+        if (Input.GetKey(KeyCode.Mouse1) && pickingUp == false && object3.activeInHierarchy == true)
         {
             ThrowItem();
         }
@@ -165,7 +171,7 @@ public class playerMovement : MonoBehaviour
         }
         if (object3.activeInHierarchy == true)
         {
-            Instantiate(throwCube, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, gun.transform.rotation);
+            Instantiate(throwCigDish, GameObject.Find("WeaponHolder").GetComponent<Transform>().position, gun.transform.rotation);
             object3.SetActive(false);
             pickupText.SetActive(false);
         }
@@ -193,8 +199,8 @@ public class playerMovement : MonoBehaviour
         {
             pickingUp = false;
             object1.SetActive(false);
-            object2.SetActive(true);
-            object3.SetActive(false);
+            object2.SetActive(false);
+            object3.SetActive(true);
             timeManager.GetComponent<sceneManager>().resetCullingMask();
         }
     }

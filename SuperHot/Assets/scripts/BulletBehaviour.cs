@@ -35,6 +35,14 @@ public class BulletBehaviour : MonoBehaviour {
             other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
             Destroy(gameObject);
         }
+
+        if (gameObject.tag == "Item")
+        {
+            print("hit " + other.name + "!");
+            Instantiate(enemyHitParticle, this.transform.position, Quaternion.identity);
+            other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision other)
