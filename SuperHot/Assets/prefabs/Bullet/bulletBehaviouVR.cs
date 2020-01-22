@@ -11,6 +11,7 @@ public class bulletBehaviouVR : MonoBehaviour
     Rigidbody rigid;
     private float speed = 1000f;
     [SerializeField] private GameObject enemyHitParticle;
+    public bool item = false;
 
     void Start()
     {
@@ -19,21 +20,19 @@ public class bulletBehaviouVR : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += transform.forward * Time.timeScale;
+        if (!item)
+        {
+            transform.position += transform.forward * Time.timeScale;
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Map")
         {
             print("hit " + other.name + "!");
             Instantiate(enemyHitParticle, this.transform.position, Quaternion.identity);
-            other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
-            Destroy(gameObject);
-        }
-        else
-        {
-            print("hit " + other.name + "!");
             other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
             Destroy(gameObject);
         }
@@ -41,9 +40,12 @@ public class bulletBehaviouVR : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        print("hit " + other.gameObject.name + "!");
-        other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
-        Destroy(gameObject);
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Map")
+        {
+            print("hit " + other.gameObject.name + "!");
+            other.gameObject.SendMessageUpwards("ApplyDamage", SendMessageOptions.DontRequireReceiver);
+            Destroy(gameObject);
+        }
     }
 }
 

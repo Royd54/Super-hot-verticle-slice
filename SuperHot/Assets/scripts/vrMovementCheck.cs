@@ -18,8 +18,11 @@ public class vrMovementCheck : MonoBehaviour
     [SerializeField] Camera vrCam;
     [SerializeField] Transform firstRot;
     [SerializeField] Transform secondRot;
-    private float slowMo = 0.1f;
-    private float normTime = 0.5f;
+    [SerializeField] GameObject enemyDebug1;
+    [SerializeField] GameObject enemyDebug2;
+    [SerializeField] GameObject enemyDebug3;
+    private float slowMo = 0.2f;
+    private float normTime = 0.8f;
     private bool doSlowMo = false;
     // Start is called before the first frame update
     void Start()

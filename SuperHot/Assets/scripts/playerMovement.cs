@@ -62,7 +62,7 @@ public class playerMovement : MonoBehaviour
         }
         else
         {
-            targetScale = 0;
+            targetScale = 0.01f;
             lerpSpeed = 4;
         }
         tm.myTimeScale = Mathf.Lerp(tm.myTimeScale, targetScale, Time.deltaTime * lerpSpeed);

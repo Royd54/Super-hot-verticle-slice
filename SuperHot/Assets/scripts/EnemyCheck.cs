@@ -10,7 +10,7 @@ public class EnemyCheck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyCount = Enemy.Length;
+        enemyCount = Enemy.Length + 1;
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class EnemyCheck : MonoBehaviour
         }
     }
 
-    private void EnemyDead()
+    public void EnemyDead()
     {
         enemyCount -= 1;
     }

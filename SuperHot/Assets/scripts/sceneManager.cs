@@ -9,6 +9,7 @@ public class sceneManager : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private GameObject beginObject;
     [SerializeField] private Transform beginPos;
+    [SerializeField] private GameObject[] enemys;
     private sceneManager sm;
 
     // Start is called before the first frame update
@@ -41,14 +42,21 @@ public class sceneManager : MonoBehaviour
     public void nextLevel()
     {
         Scene sceneLoaded = SceneManager.GetActiveScene();
-        if (sceneLoaded.buildIndex == 1)
-        {
-            SceneManager.LoadScene(sceneBuildIndex: 0);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneBuildIndex: 1);
-        }
-        
+        SceneManager.LoadScene(sceneLoaded.buildIndex);
+        // if (sceneLoaded.buildIndex == 1)
+        // {
+        //     SceneManager.LoadScene(sceneBuildIndex: 0);
+        // }
+        // else
+        // {
+        //     SceneManager.LoadScene(sceneBuildIndex: 1);
+        //}
+
     }
+
+    public void Death()
+    {
+            SceneManager.LoadScene(sceneBuildIndex: 0);
+    }
+
 }
